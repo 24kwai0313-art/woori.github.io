@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>전우리 포트폴리오</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ══════════════════════════════════════════
+       0. CSS 변수 — 무지개 6색 팔레트
+          각 섹션마다 하나의 색상을 지정
+       ══════════════════════════════════════════ */
+    :root {
+      /* 무지개 섹션 컬러 */
+      --c-hero:       #FF6B6B;   /* 빨 — Hero      */
+      --c-about:      #FF9F43;   /* 주 — 자기소개  */
+      --c-activities: #FFEAA7;   /* 노 — 교내외활동 */
+      --c-projects:   #55EFC4;   /* 초 — 프로젝트  */
+      --c-gallery:    #74B9FF;   /* 파 — 갤러리    */
+      --c-media:      #A29BFE;   /* 남 — 동영상    */
+      --c-contact:    #FD79A8;   /* 보 — 연락처    */
+
+      /* 어두운 텍스트용 짝 */
+      --c-hero-dark:       #c0392b;
+      --c-about-dark:      #e67e22;
+      --c-activities-dark: #d4a017;
+      --c-projects-dark:   #00b894;
+      --c-gallery-dark:    #0984e3;
+      --c-media-dark:      #6c5ce7;
+      --c-contact-dark:    #e84393;
+
+      /* 중립 */
+      --gray-50:  #fafafa;
+      --gray-100: #f5f5f5;
+      --gray-200: #e8e8e8;
+      --gray-500: #9e9e9e;
+      --gray-700: #444;
+      --gray-900: #1a1a1a;
+
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.07);
+      --shadow-md: 0 6px 24px rgba(0,0,0,0.10);
+      --shadow-lg: 0 16px 48px rgba(0,0,0,0.14);
+
+      --max-w: 900px;
+      --font-sans: 'DM Sans', 'Noto Sans KR', sans-serif;
+      --font-serif: 'Noto Serif KR', serif;
+    }
+
+    /* ══════════════════════════════════════════
+       1. 리셋 & 기본
+       ══════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--gray-900);
+      background: #fff;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    /* ══════════════════════════════════════════
+       2. 네비게이션 — 흰 배경 + 왼쪽 컬러 인디케이터
+       ══════════════════════════════════════════ */
+    #nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-200);
+      box-shadow: var(--shadow-sm);
+    }
+
+    #nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 60px;
+    }
+
+    .nav-logo {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--c-hero), var(--c-about), var(--c-projects), var(--c-gallery), var(--c-media), var(--c-contact));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 6px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--gray-700);
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 5px 10px;
+      border-radius: var(--radius-sm);
+      transition: background 0.18s, color 0.18s;
+      letter-spacing: 0.01em;
+    }
+
+    .nav-links a:hover {
+      background: var(--gray-100);
+      color: var(--gray-900);
+    }
+
+    /* ══════════════════════════════════════════
+       3. 섹션 공통 스타일
+       ══════════════════════════════════════════ */
+    section {
+      padding: 88px 0;
+      position: relative;
+    }
+
+    /* 섹션 제목 공통 */
+    .section-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.6rem, 3.5vw, 2.1rem);
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 40px;
+      position: relative;
+      display: inline-block;
+    }
+
+    /* 제목 아래 컬러 언더라인 */
+    .section-title::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -6px;
+      width: 48px; height: 4px;
+      border-radius: 2px;
+    }
+
+    /* ══════════════════════════════════════════
+       4. HERO — 빨강 계열
+       ══════════════════════════════════════════ */
+    #hero {
+      background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 60%, #FFC371 100%);
+      padding: 100px 0 80px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* 배경 원 장식 */
+    #hero::before,
+    #hero::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+    }
+    #hero::before { width: 480px; height: 480px; top: -160px; right: -120px; }
+    #hero::after  { width: 260px; height: 260px; bottom: -100px; left: -60px; }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 48px;
+    }
+
+    #hero-photo {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.30);
+      border: 4px solid rgba(255,255,255,0.60);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.8);
+      flex-shrink: 0;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      overflow: hidden;
+    }
+
+    .hero-text { color: #fff; }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.22);
+      border: 1px solid rgba(255,255,255,0.40);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+      letter-spacing: 0.06em;
+    }
+
+    #hero-name {
+      font-family: var(--font-serif);
+      font-size: clamp(2.2rem, 5vw, 3rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    }
+
+    #hero-tagline {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.88);
+      margin-bottom: 6px;
+      font-weight: 400;
+    }
+
+    #hero-sub {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.70);
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 24px;
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s;
+      font-family: var(--font-sans);
+    }
+
+    .btn-white {
+      background: #fff;
+      color: var(--c-hero-dark);
+    }
+    .btn-white:hover { background: rgba(255,255,255,0.85); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+    .btn-outline-white {
+      background: transparent;
+      border-color: rgba(255,255,255,0.60);
+      color: #fff;
+    }
+    .btn-outline-white:hover { background: rgba(255,255,255,0.15); transform: translateY(-1px); }
+
+    /* ══════════════════════════════════════════
+       5. ABOUT — 주황 계열
+       ══════════════════════════════════════════ */
+    #about {
+      background: linear-gradient(160deg, #fff9f0 0%, #fff3e0 100%);
+    }
+
+    #about .section-eyebrow { color: var(--c-about-dark); }
+    #about .section-title::after { background: var(--c-about); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.8fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .about-info-card {
+      background: #fff;
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      border-top: 4px solid var(--c-about);
+    }
+
+    .about-info-card table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    .about-info-card tr {
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .about-info-card tr:last-child { border-bottom: none; }
+
+    .about-info-card th {
+      text-align: left;
+      padding: 10px 16px 10px 0;
+      color: var(--gray-500);
+      font-weight: 600;
+      width: 90px;
+      white-space: nowrap;
+    }
+
+    .about-info-card td {
+      padding: 10px 0;
+      color: var(--gray-900);
+      font-weight: 500;
+    }
+
+    #about-text {
+      background: #fff;
+      border-radius: var(--radius-md);
+      padding: 28px 32px;
+      box-shadow: var(--shadow-sm);
+      border-left: 4px solid var(--c-about);
+      font-size: 0.95rem;
+      color: var(--gray-700);
+      line-height: 1.95;
+    }
+
+    /* ══════════════════════════════════════════
+       6. ACTIVITIES — 노란 계열
+       ══════════════════════════════════════════ */
+    #activities {
+      background: linear-gradient(160deg, #fffde7 0%, #fff8c5 100%);
+    }
+
+    #activities .section-eyebrow { color: var(--c-activities-dark); }
+    #activities .section-title::after { background: var(--c-activities); }
+
+    /* 타임라인 스타일 카드 */
+    #activities-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      padding-left: 36px;
+    }
+
+    #activities-list::before {
+      content: '';
+      position: absolute;
+      left: 11px;
+      top: 10px;
+      bottom: 10px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--c-activities), var(--c-activities-dark));
+      border-radius: 2px;
+    }
+
+    .card {
+      position: relative;
+      background: #fff;
+      border-radius: var(--radius-md);
+      padding: 22px 26px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-100);
+      transition: box-shadow 0.22s, transform 0.22s;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    /* 타임라인 점 */
+    #activities-list .card::before {
+      content: '';
+      position: absolute;
+      left: -30px;
+      top: 28px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--c-activities);
+      border: 3px solid var(--c-activities-dark);
+      box-shadow: 0 0 0 3px rgba(255,234,167,0.5);
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 6px;
+    }
+
+    .card-meta {
+      font-size: 0.8rem;
+      color: var(--gray-500);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .card-desc {
+      font-size: 0.9rem;
+      color: var(--gray-700);
+      line-height: 1.75;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.04em;
+    }
+
+    /* 뱃지 색상 */
+    .badge-yellow { background: #fff3cd; color: #856404; }
+    .badge-blue   { background: #d0ebff; color: #1864ab; }
+    .badge-green  { background: #d3f9d8; color: #2b8a3e; }
+    .badge-red    { background: #ffe0e0; color: #c92a2a; }
+    .badge-purple { background: #e5dbff; color: #5f3dc4; }
+
+    /* #activities 의 뱃지 기본 */
+    #activities .badge { background: rgba(255,234,167,0.5); color: var(--c-activities-dark); border: 1px solid var(--c-activities); }
+
+    /* ══════════════════════════════════════════
+       7. PROJECTS — 초록 계열
+       ══════════════════════════════════════════ */
+    #projects {
+      background: linear-gradient(160deg, #f0fff8 0%, #d4fef0 100%);
+    }
+
+    #projects .section-eyebrow { color: var(--c-projects-dark); }
+    #projects .section-title::after { background: var(--c-projects); }
+
+    #projects-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    #projects .card {
+      border-top: 4px solid var(--c-projects);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-number {
+      font-size: 2rem;
+      font-weight: 700;
+      font-family: var(--font-serif);
+      color: rgba(85,239,196,0.35);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    #projects .card-title { font-size: 0.98rem; margin-bottom: 6px; }
+
+    .tag-row {
+      margin-top: auto;
+      padding-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: rgba(85,239,196,0.18);
+      color: var(--c-projects-dark);
+      border: 1px solid rgba(85,239,196,0.45);
+    }
+
+    /* ══════════════════════════════════════════
+       8. GALLERY — 파란 계열
+       ══════════════════════════════════════════ */
+    #gallery {
+      background: linear-gradient(160deg, #eff8ff 0%, #d0eaff 100%);
+    }
+
+    #gallery .section-eyebrow { color: var(--c-gallery-dark); }
+    #gallery .section-title::after { background: var(--c-gallery); }
+
+    .gallery-hint {
+      font-size: 0.84rem;
+      color: var(--gray-500);
+      margin-top: -24px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .gallery-placeholder {
+      aspect-ratio: 1;
+      background: rgba(116,185,255,0.12);
+      border: 2px dashed rgba(116,185,255,0.55);
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      color: var(--c-gallery-dark);
+      gap: 6px;
+      transition: background 0.2s;
+      cursor: default;
+    }
+
+    .gallery-placeholder:hover {
+      background: rgba(116,185,255,0.22);
+    }
+
+    .gallery-placeholder::before {
+      content: '🖼';
+      font-size: 1.6rem;
+      opacity: 0.5;
+    }
+
+    /* 1번 칸은 크게 — 2×2 스팬 */
+    .gallery-placeholder:first-child {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    /* ══════════════════════════════════════════
+       9. MEDIA — 남색·보라 계열
+       ══════════════════════════════════════════ */
+    #media {
+      background: linear-gradient(160deg, #f5f0ff 0%, #ede0ff 100%);
+    }
+
+    #media .section-eyebrow { color: var(--c-media-dark); }
+    #media .section-title::after { background: var(--c-media); }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    #media .video-wrapper {
+      background: #fff;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(162,155,254,0.25);
+      transition: box-shadow 0.22s, transform 0.22s;
+    }
+
+    #media .video-wrapper:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .video-placeholder {
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #a29bfe22, #6c5ce722);
+      border-bottom: 1px solid rgba(162,155,254,0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--c-media-dark);
+      font-size: 0.82rem;
+      gap: 8px;
+    }
+
+    .video-placeholder::before {
+      content: '▶';
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--c-media);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      padding-left: 4px;
+      box-shadow: 0 4px 16px rgba(162,155,254,0.45);
+    }
+
+    .video-info {
+      padding: 16px 18px;
+    }
+
+    .video-info .video-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 4px;
+    }
+
+    .video-info .video-desc {
+      font-size: 0.8rem;
+      color: var(--gray-500);
+    }
+
+    /* ══════════════════════════════════════════
+       10. CONTACT — 핫핑크·보라 계열
+       ══════════════════════════════════════════ */
+    #contact {
+      background: linear-gradient(135deg, #2d1b69 0%, #c0392b 60%, #fd79a8 100%);
+    }
+
+    #contact .section-eyebrow { color: rgba(255,255,255,0.65); }
+    #contact .section-title { color: #fff; }
+    #contact .section-title::after { background: rgba(255,255,255,0.5); }
+
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .contact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .contact-list li {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    .contact-list li:last-child { border-bottom: none; }
+
+    .contact-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .contact-label {
+      display: block;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.55);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 1px;
+    }
+
+    .contact-value {
+      color: #fff;
+      font-size: 0.92rem;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .contact-value:hover { text-decoration: underline; }
+
+    /* 연락 폼 */
+    .contact-form {
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      backdrop-filter: blur(8px);
+    }
+
+    .contact-form .form-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.70);
+      margin-bottom: 6px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      color: #fff;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder {
+      color: rgba(255,255,255,0.35);
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border-color: rgba(255,255,255,0.55);
+    }
+
+    .contact-form textarea { resize: vertical; min-height: 90px; }
+
+    .btn-send {
+      width: 100%;
+      background: #fff;
+      color: #2d1b69;
+      border: none;
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-send:hover { background: rgba(255,255,255,0.88); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+    /* ══════════════════════════════════════════
+       11. FOOTER
+       ══════════════════════════════════════════ */
+    #footer {
+      background: #111;
+      padding: 36px 0;
+      text-align: center;
+    }
+
+    #footer .footer-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-logo {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      background: linear-gradient(90deg, var(--c-hero), var(--c-about), var(--c-projects), var(--c-gallery), var(--c-media), var(--c-contact));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: #555;
+    }
+
+    /* ══════════════════════════════════════════
+       12. 스크롤 애니메이션
+       ══════════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+    .reveal-delay-1 { transition-delay: 0.10s; }
+    .reveal-delay-2 { transition-delay: 0.20s; }
+    .reveal-delay-3 { transition-delay: 0.30s; }
+    .reveal-delay-4 { transition-delay: 0.40s; }
+
+    /* ══════════════════════════════════════════
+       13. 반응형
+       ══════════════════════════════════════════ */
+    @media (max-width: 700px) {
+      .hero-inner { flex-direction: column; text-align: center; gap: 24px; }
+      .hero-cta { justify-content: center; }
+      .about-grid { grid-template-columns: 1fr; }
+      #projects-list { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-placeholder:first-child { grid-column: span 2; grid-row: span 1; }
+      .contact-inner { grid-template-columns: 1fr; }
+      .nav-links { gap: 2px; }
+      .nav-links a { font-size: 0.76rem; padding: 4px 7px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       NAV
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <nav id="nav">
+    <div class="container">
+      <span class="nav-logo">전우리 포트폴리오</span>
+      <ul class="nav-links">
+        <li><a href="#about">자기소개</a></li>
+        <li><a href="#activities">교내외 활동</a></li>
+        <li><a href="#projects">프로젝트</a></li>
+        <li><a href="#gallery">작품 사진</a></li>
+        <li><a href="#media">동영상</a></li>
+        <li><a href="#contact">연락처</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       HERO — 🔴 빨강
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <header id="hero">
+    <div class="container">
+      <div class="hero-inner">
+
+        <div id="hero-photo">프로필<br>사진</div>
+
+        <div class="hero-text">
+          <span class="hero-badge">대입 포트폴리오 2025</span>
+          <h1 id="hero-name">전우리</h1>
+          <p id="hero-tagline">서울 ○○고등학교 3학년</p>
+          <p id="hero-sub">자연과학과 데이터에 관심을 가진 학생입니다.</p>
+          <div class="hero-cta">
+            <a href="#contact" class="btn btn-white">연락하기</a>
+            <a href="#projects" class="btn btn-outline-white">프로젝트 보기</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+
+  <main>
+
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         ABOUT — 🟠 주황
+         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+    <section id="about">
+      <div class="container">
+        <span class="section-eyebrow reveal">About Me</span>
+        <h2 class="section-title reveal reveal-delay-1">자기소개</h2>
+
+        <div class="about-grid">
+
+          <!-- 기본 정보 카드 -->
+          <div class="about-info-card reveal reveal-delay-2" id="about-info">
+            <table>
+              <tbody>
+                <tr>
+                  <th>학교</th>
+                  <td id="info-school">○○고등학교</td>
+                </tr>
+                <tr>
+                  <th>학년</th>
+                  <td id="info-grade">3학년</td>
+                </tr>
+                <tr>
+                  <th>관심 분야</th>
+                  <td id="info-interest">자연과학, 데이터 분석</td>
+                </tr>
+                <tr>
+                  <th>지원 계열</th>
+                  <td id="info-major">이공계열</td>
+                </tr>
+                <tr>
+                  <th>목표 대학</th>
+                  <td id="info-university">미정</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 자기소개 본문 -->
+          <div id="about-text" class="reveal reveal-delay-3">
+            안녕하세요. 저는 자연과학과 데이터 분석에 깊은 관심을 가진 고등학교 3학년 학생입니다.<br><br>
+            학교에서 수학과 과학 심화 과목을 이수하며 논리적 사고력을 키워왔고, 다양한 교내외 활동을 통해 협업과 리더십을 경험했습니다.<br><br>
+            이 공간에 자기소개 내용을 자유롭게 작성하세요.
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         ACTIVITIES — 🟡 노랑
+         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+    <section id="activities">
+      <div class="container">
+        <span class="section-eyebrow reveal">Activities</span>
+        <h2 class="section-title reveal reveal-delay-1">교내외 활동</h2>
+
+        <div id="activities-list">
+
+          <div class="card reveal reveal-delay-1" id="activity-1">
+            <div class="card-title">수학올림피아드 교내 대회</div>
+            <div class="card-meta">
+              2024.03 — 2024.06
+              <span class="badge">교내활동</span>
+            </div>
+            <p class="card-desc">
+              수학적 사고력과 문제 해결 능력을 키울 수 있는 대회에 참가했습니다.
+              활동 내용을 여기에 작성하세요.
+            </p>
+          </div>
+
+          <div class="card reveal reveal-delay-2" id="activity-2">
+            <div class="card-title">환경 봉사 동아리</div>
+            <div class="card-meta">
+              2023.03 — 2024.12
+              <span class="badge">동아리</span>
+            </div>
+            <p class="card-desc">
+              지역 환경 보호 캠페인을 기획·운영했습니다.
+              활동 내용을 여기에 작성하세요.
+            </p>
+          </div>
+
+          <div class="card reveal reveal-delay-3" id="activity-3">
+            <div class="card-title">전국 청소년 발명대회 은상</div>
+            <div class="card-meta">
+              2024.08
+              <span class="badge">교외활동</span>
+            </div>
+            <p class="card-desc">
+              생활 속 문제를 개선하는 아이디어를 제품으로 구체화했습니다.
+              활동 내용을 여기에 작성하세요.
+            </p>
+          </div>
+
+          <!-- 새 활동 추가 시 위 카드를 복사하고 id="activity-N"을 증가시키세요 -->
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         PROJECTS — 🟢 초록
+         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+    <section id="projects">
+      <div class="container">
+        <span class="section-eyebrow reveal">Projects</span>
+        <h2 class="section-title reveal reveal-delay-1">프로젝트 경험</h2>
+
+        <div id="projects-list">
+
+          <div class="card reveal reveal-delay-1" id="project-1">
+            <div class="project-number">01</div>
+            <div class="card-title">미세먼지 측정 IoT 장치 제작</div>
+            <div class="card-meta">2024.03 — 2024.08</div>
+            <p class="card-desc">
+              아두이노를 활용해 실내 미세먼지 농도를 측정하고 데이터를 시각화하는 장치를 제작했습니다.
+              프로젝트 설명을 여기에 작성하세요.
+            </p>
+            <div class="tag-row" id="project-1-tags">
+              <span class="tag">아두이노</span>
+              <span class="tag">Python</span>
+              <span class="tag">데이터 분석</span>
+            </div>
+          </div>
+
+          <div class="card reveal reveal-delay-2" id="project-2">
+            <div class="project-number">02</div>
+            <div class="card-title">교내 독서량 통계 분석 보고서</div>
+            <div class="card-meta">2023.09 — 2023.12</div>
+            <p class="card-desc">
+              2년간 학교 도서관 대출 데이터를 수집·분석하여 독서 트렌드 보고서를 작성했습니다.
+              프로젝트 설명을 여기에 작성하세요.
+            </p>
+            <div class="tag-row" id="project-2-tags">
+              <span class="tag">통계</span>
+              <span class="tag">Excel</span>
+              <span class="tag">보고서 작성</span>
+            </div>
+          </div>
+
+          <div class="card reveal reveal-delay-3" id="project-3">
+            <div class="project-number">03</div>
+            <div class="card-title">학급 신문 기획·편집</div>
+            <div class="card-meta">2023.03 — 2023.08</div>
+            <p class="card-desc">
+              학급 구성원과 함께 월간 신문을 기획하고 편집장을 맡아 발행을 주도했습니다.
+              프로젝트 설명을 여기에 작성하세요.
+            </p>
+            <div class="tag-row" id="project-3-tags">
+              <span class="tag">기획</span>
+              <span class="tag">편집</span>
+              <span class="tag">리더십</span>
+            </div>
+          </div>
+
+          <!-- 새 프로젝트 추가 시 위 카드를 복사하고 id="project-N"을 증가시키세요 -->
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         GALLERY — 🔵 파랑
+         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+    <section id="gallery">
+      <div class="container">
+        <span class="section-eyebrow reveal">Gallery</span>
+        <h2 class="section-title reveal reveal-delay-1">작품 사진</h2>
+        <p class="gallery-hint reveal reveal-delay-2">
+          placeholder를 <code>&lt;img src="경로" alt="설명"&gt;</code> 태그로 교체하세요.
+        </p>
+
+        <div class="gallery-grid reveal reveal-delay-2" id="gallery-grid">
+          <!-- 사진 1 — 2×2 크기 (grid-column: span 2) -->
+          <div class="gallery-placeholder" id="gallery-1">사진 1 (대표)</div>
+          <!-- 사진 2 -->
+          <div class="gallery-placeholder" id="gallery-2">사진 2</div>
+          <!-- 사진 3 -->
+          <div class="gallery-placeholder" id="gallery-3">사진 3</div>
+          <!-- 사진 4 -->
+          <div class="gallery-placeholder" id="gallery-4">사진 4</div>
+          <!-- 사진 5 -->
+          <div class="gallery-placeholder" id="gallery-5">사진 5</div>
+          <!-- 사진 6 -->
+          <div class="gallery-placeholder" id="gallery-6">사진 6</div>
+          <!-- 사진 칸 추가 시 id="gallery-N" 증가 -->
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         MEDIA — 🟣 보라
+         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+    <section id="media">
+      <div class="container">
+        <span class="section-eyebrow reveal">Media</span>
+        <h2 class="section-title reveal reveal-delay-1">소개 동영상</h2>
+        <p style="font-size:0.84rem; color:var(--gray-500); margin-top:-24px; margin-bottom:28px;" class="reveal reveal-delay-2">
+          YouTube URL을 <code>iframe src</code>에 넣거나 <code>&lt;video&gt;</code> 태그로 교체하세요.
+        </p>
+
+        <div class="video-grid" id="video-grid">
+
+          <div class="video-wrapper reveal reveal-delay-1" id="video-1">
+            <div class="video-placeholder">동영상 1 자리</div>
+            <div class="video-info">
+              <p class="video-title">자기소개 영상</p>
+              <p class="video-desc">영상 설명을 여기에 작성하세요.</p>
+            </div>
+          </div>
+
+          <div class="video-wrapper reveal reveal-delay-2" id="video-2">
+            <div class="video-placeholder">동영상 2 자리</div>
+            <div class="video-info">
+              <p class="video-title">프로젝트 시연 영상</p>
+              <p class="video-desc">영상 설명을 여기에 작성하세요.</p>
+            </div>
+          </div>
+
+          <!-- 동영상 추가 시 id="video-N" 증가 -->
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         CONTACT — 🟣🔴 핑크-보라
+         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+    <section id="contact">
+      <div class="container">
+        <span class="section-eyebrow reveal">Contact</span>
+        <h2 class="section-title reveal reveal-delay-1">연락처</h2>
+
+        <div class="contact-inner">
+
+          <!-- 연락처 목록 -->
+          <ul class="contact-list reveal reveal-delay-2" id="contact-list">
+            <li id="contact-email">
+              <div class="contact-icon">📧</div>
+              <div>
+                <span class="contact-label">이메일</span>
+                <a class="contact-value" href="mailto:woori@example.com">woori@example.com</a>
+              </div>
+            </li>
+            <li id="contact-phone">
+              <div class="contact-icon">📱</div>
+              <div>
+                <span class="contact-label">전화</span>
+                <span class="contact-value">010-0000-0000</span>
+              </div>
+            </li>
+            <li id="contact-school">
+              <div class="contact-icon">🏫</div>
+              <div>
+                <span class="contact-label">학교</span>
+                <span class="contact-value">서울 ○○고등학교</span>
+              </div>
+            </li>
+            <li id="contact-location">
+              <div class="contact-icon">📍</div>
+              <div>
+                <span class="contact-label">지역</span>
+                <span class="contact-value">서울특별시</span>
+              </div>
+            </li>
+          </ul>
+
+          <!-- 메시지 폼 -->
+          <div class="contact-form reveal reveal-delay-3">
+            <label class="form-label" for="cf-name">이름</label>
+            <input type="text" id="cf-name" placeholder="이름을 입력하세요" />
+
+            <label class="form-label" for="cf-email">이메일</label>
+            <input type="email" id="cf-email" placeholder="이메일을 입력하세요" />
+
+            <label class="form-label" for="cf-msg">메시지</label>
+            <textarea id="cf-msg" placeholder="메시지를 입력하세요..."></textarea>
+
+            <button class="btn-send" type="button">메시지 보내기</button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       FOOTER
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-logo">전우리 포트폴리오</span>
+        <p class="footer-copy">© 2025 Jeon Woori. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       SCRIPTS — 스크롤 reveal
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <script>
+    // IntersectionObserver로 .reveal 클래스 요소에 .visible 추가
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target); // 한 번 보이면 해제
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
