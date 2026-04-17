@@ -1109,7 +1109,7 @@
               <div class="contact-icon">📧</div>
               <div>
                 <span class="contact-label">이메일</span>
-                <a class="contact-value" href="mailto:woori@example.com">woori@example.com</a>
+                <a class="contact-value" href="mailto:junwoori080122@gmail.com">junwoori080122@gmail.com</a>
               </div>
             </li>
             <li id="contact-phone">
@@ -1136,18 +1136,21 @@
           </ul>
 
           <!-- 메시지 폼 -->
-          <div class="contact-form reveal reveal-delay-3">
+          <form class="contact-form reveal reveal-delay-3" action="https://formsubmit.co/junwoori080122@gmail.com" method="POST">
+            <input type="hidden" name="_subject" value="[웹사이트 문의] 새로운 메시지가 도착했습니다" />
+            <input type="hidden" name="_captcha" value="false" />
+
             <label class="form-label" for="cf-name">이름</label>
-            <input type="text" id="cf-name" placeholder="이름을 입력하세요" />
+            <input type="text" id="cf-name" name="name" placeholder="이름을 입력하세요" required />
 
             <label class="form-label" for="cf-email">이메일</label>
-            <input type="email" id="cf-email" placeholder="이메일을 입력하세요" />
+            <input type="email" id="cf-email" name="email" placeholder="이메일을 입력하세요" required />
 
             <label class="form-label" for="cf-msg">메시지</label>
-            <textarea id="cf-msg" placeholder="메시지를 입력하세요..."></textarea>
+            <textarea id="cf-msg" name="message" placeholder="메시지를 입력하세요..." required></textarea>
 
-            <button class="btn-send" type="button">메시지 보내기</button>
-          </div>
+            <button class="btn-send" type="submit">메시지 보내기</button>
+          </form>
 
         </div>
       </div>
